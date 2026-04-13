@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Kyeongbae Kim — Animation Director based in Seoul. Independent film, commercial work, and illustration.">
+  <title>Kyeongbae Kim — Animation Director</title>
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* Inline: extra home-page specifics */
+    .nav-block:nth-child(1) .nav-block-bg {
+      background-image: url('https://img.youtube.com/vi/0VweUigkTzY/maxresdefault.jpg');
+    }
+    .nav-block:nth-child(2) .nav-block-bg {
+      background-image: url('https://img.youtube.com/vi/Y4gwAX3yrpk/maxresdefault.jpg');
+    }
+    .nav-block:nth-child(3) .nav-block-bg {
+      background-image: url('https://lh3.googleusercontent.com/d/1nkLb_PYA7ZJnD--IZlWfmgZoF9l89Elu');
+      background-position: center top;
+    }
+    .nav-block:nth-child(4) .nav-block-bg {
+      background-image: url('https://img.youtube.com/vi/0VweUigkTzY/hqdefault.jpg');
+      filter: brightness(0.3) contrast(1.2) grayscale(80%);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div class="cursor"></div>
+  <div class="cursor-ring"></div>
+
+  <!-- Nav Overlay -->
+  <div class="nav-overlay" role="dialog" aria-label="Navigation menu">
+    <nav>
+      <ul>
+        <li><a href="index.html"><span class="nav-number">01</span>Home</a></li>
+        <li><a href="independent-film.html"><span class="nav-number">02</span>Independent Film</a></li>
+        <li><a href="commercial-film.html"><span class="nav-number">03</span>Commercial Film</a></li>
+        <li><a href="illustration.html"><span class="nav-number">04</span>Illustration</a></li>
+        <li><a href="about.html"><span class="nav-number">05</span>About</a></li>
+      </ul>
+    </nav>
+    <div class="nav-footer">
+      <div class="nav-footer-info">
+        <span>Seoul, Korea</span>
+        <span>Available for freelance</span>
+      </div>
+      <div class="nav-footer-info" style="text-align:right;">
+        <span>kimbyeonggae@gmail.com</span>
+        <span>@kimbyeonggae</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <header class="site-header">
+    <a href="index.html" class="site-logo" aria-label="Kyeongbae Kim — Home">KYEONGBAE KIM</a>
+    <button class="nav-toggle" aria-label="Open navigation menu" aria-expanded="false">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero" aria-label="Hero section">
+    <div class="hero-video-wrap">
+      <iframe
+        src="https://www.youtube.com/embed/0VweUigkTzY?autoplay=1&mute=1&loop=1&playlist=0VweUigkTzY&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&enablejsapi=1"
+        title="Background reel"
+        allow="autoplay; encrypted-media"
+        allowfullscreen
+        loading="lazy"
+      ></iframe>
+    </div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Animation Director — Seoul</p>
+      <h1 class="hero-title">KYEONGBAE<br>KIM</h1>
+      <p class="hero-subtitle">Emotion in motion</p>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="hero-scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- Navigation Blocks -->
+  <section aria-label="Work categories">
+    <div class="nav-blocks">
+
+      <a href="independent-film.html" class="nav-block" aria-label="Independent Film">
+        <div class="nav-block-bg"></div>
+        <div class="nav-block-overlay"></div>
+        <div class="nav-block-content">
+          <span class="nav-block-number">01</span>
+          <h2 class="nav-block-title">Independent<br>Film</h2>
+          <span class="nav-block-arrow">View work →</span>
+        </div>
+      </a>
+
+      <a href="commercial-film.html" class="nav-block" aria-label="Commercial Film">
+        <div class="nav-block-bg"></div>
+        <div class="nav-block-overlay"></div>
+        <div class="nav-block-content">
+          <span class="nav-block-number">02</span>
+          <h2 class="nav-block-title">Commercial<br>Film</h2>
+          <span class="nav-block-arrow">View work →</span>
+        </div>
+      </a>
+
+      <a href="illustration.html" class="nav-block" aria-label="Illustration">
+        <div class="nav-block-bg"></div>
+        <div class="nav-block-overlay"></div>
+        <div class="nav-block-content">
+          <span class="nav-block-number">03</span>
+          <h2 class="nav-block-title">Illustration</h2>
+          <span class="nav-block-arrow">View work →</span>
+        </div>
+      </a>
+
+      <a href="about.html" class="nav-block" aria-label="About">
+        <div class="nav-block-bg"></div>
+        <div class="nav-block-overlay"></div>
+        <div class="nav-block-content">
+          <span class="nav-block-number">04</span>
+          <h2 class="nav-block-title">About</h2>
+          <span class="nav-block-arrow">Learn more →</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <span class="footer-copy">© 2024 Kyeongbae Kim. All rights reserved.</span>
+    <a href="#" class="footer-back-top">Back to top ↑</a>
+  </footer>
+
+  <script src="js/script.js"></script>
+</body>
+</html>
