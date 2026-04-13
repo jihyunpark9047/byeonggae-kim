@@ -58,7 +58,7 @@ const PROJECTS = {
     year: '2023',
     duration: '4 min',
     role: 'Director / Animator',
-    description: 'Music video animation exploring resonance between the sonic and the visual. Colors and forms vibrate in precise response to each musical moment. Commissioned for a Korean pop artist's visual campaign.',
+    description: 'Music video animation exploring resonance between the sonic and the visual. Colors and forms vibrate in precise response to each musical moment. Commissioned for a Korean pop artist\'s visual campaign.',
     videoId: 'Y4gwAX3yrpk',
     back: '../commercial-film.html',
     galleryImages: [
@@ -92,6 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
    ============================================================ */
 function initCursor() {
   if (window.matchMedia('(hover: none)').matches) return;
+  document.body.classList.add('custom-cursor');
 
   const cursor = document.querySelector('.cursor');
   const ring   = document.querySelector('.cursor-ring');
@@ -99,8 +100,6 @@ function initCursor() {
 
   let ringX = 0, ringY = 0;
   let mouseX = 0, mouseY = 0;
-  let animId;
-
   document.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
@@ -112,7 +111,7 @@ function initCursor() {
     ringX += (mouseX - ringX) * ease;
     ringY += (mouseY - ringY) * ease;
     ring.style.transform = `translate(calc(${ringX}px - 50%), calc(${ringY}px - 50%))`;
-    animId = requestAnimationFrame(animateRing);
+    requestAnimationFrame(animateRing);
   }
   animateRing();
 
@@ -171,9 +170,17 @@ function initScrollReveal() {
         io.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  }, { threshold: 0.05, rootMargin: '0px 0px 0px 0px' });
 
-  els.forEach(el => io.observe(el));
+  els.forEach(el => {
+    // If already in viewport on load, reveal immediately
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      el.classList.add('is-visible');
+    } else {
+      io.observe(el);
+    }
+  });
 }
 
 /* ============================================================
