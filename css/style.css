@@ -164,9 +164,10 @@ body.menu-open .cursor-ring { border-color: rgba(240,237,232,0.3); }
   background: #080808;
   z-index: 400;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
-  padding: 0 10vw;
+  padding: 120px 10vw 160px;
+  overflow-y: auto;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1),
@@ -1091,7 +1092,7 @@ body.menu-open .cursor-ring { border-color: rgba(240,237,232,0.3); }
   .project-video { padding: 0 32px 64px; }
   .project-gallery { padding: 0 32px 80px; }
   .nav-footer { left: 32px; right: 32px; }
-  .nav-overlay { padding: 0 6vw; }
+  .nav-overlay { padding: 120px 6vw 160px; }
 }
 
 /* ============================================================
@@ -1145,8 +1146,8 @@ body.menu-open .cursor-ring { border-color: rgba(240,237,232,0.3); }
 
   .illustration-grid { columns: 1; padding: 32px 20px 80px; }
 
-  .nav-overlay { padding: 80px 20px 0; align-items: flex-start; }
-  .nav-overlay nav ul li a { font-size: clamp(2.5rem, 10vw, 4rem); }
+  .nav-overlay { padding: 90px 20px 40px; }
+  .nav-overlay nav ul li a { font-size: clamp(2.5rem, 10vw, 4rem); padding: 14px 0; }
   .nav-footer { display: none; }
 
   .site-footer { padding: 24px 20px; flex-direction: column; gap: 12px; text-align: center; }
