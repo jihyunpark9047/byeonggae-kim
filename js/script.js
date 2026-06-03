@@ -116,6 +116,7 @@ function initNavToggle() {
     const isOpen = toggle.classList.toggle('is-open');
     overlay.classList.toggle('is-open', isOpen);
     document.body.style.overflow = isOpen ? 'hidden' : '';
+    document.body.classList.toggle('nav-is-open', isOpen);
   });
 
   // Close on link click
@@ -124,6 +125,7 @@ function initNavToggle() {
       toggle.classList.remove('is-open');
       overlay.classList.remove('is-open');
       document.body.style.overflow = '';
+      document.body.classList.remove('nav-is-open');
     });
   });
 
@@ -133,6 +135,7 @@ function initNavToggle() {
       toggle.classList.remove('is-open');
       overlay.classList.remove('is-open');
       document.body.style.overflow = '';
+      document.body.classList.remove('nav-is-open');
     }
   });
 }
