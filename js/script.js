@@ -350,9 +350,9 @@ function initGalleryGrid() {
 
   grid.innerHTML = items.map((item, i) => {
     const delay = i > 0 ? ` reveal-delay-${Math.min(i % 3, 3)}` : '';
-    const src = item.fullUrl || item.url;
+    const lightboxSrc = item.url ? item.url.replace('&sz=w1200', '&sz=w2000') : item.fullUrl;
     return `
-      <div class="illustration-item reveal${delay}" data-lightbox="${src}">
+      <div class="illustration-item reveal${delay}" data-lightbox="${lightboxSrc}">
         <img src="${item.url}" alt="${item.name}" loading="lazy">
         <div class="illustration-overlay">
           <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
@@ -445,9 +445,9 @@ function initProjectTemplate() {
 
   if (galleryGrid && gallery.length) {
     galleryGrid.innerHTML = gallery.map((g) => {
-      const src = g.fullUrl || g.url;
+      const lightboxSrc = g.url ? g.url.replace('&sz=w1200', '&sz=w2000') : g.fullUrl;
       return `
-      <div class="gallery-item" data-lightbox="${src}">
+      <div class="gallery-item" data-lightbox="${lightboxSrc}">
         <img src="${g.url}" alt="${g.name || 'Gallery'}" loading="lazy">
         <div class="gallery-item-overlay">
           <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>

@@ -166,9 +166,9 @@ body.menu-open .cursor-ring { border-color: rgba(240,237,232,0.3); }
   z-index: 400;
   display: flex;
   align-items: flex-start;
-  justify-content: flex-start;
-  padding: 120px 10vw 160px;
-  overflow-y: auto;
+  justify-content: center;
+  flex-direction: column;
+  padding: 100px 10vw 80px;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1),
@@ -199,9 +199,9 @@ body.menu-open .cursor-ring { border-color: rgba(240,237,232,0.3); }
 
 .nav-overlay nav ul li a {
   display: block;
-  padding: 22px 0;
+  padding: clamp(8px, 1.2vh, 20px) 0;
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(3rem, 7vw, 6rem);
+  font-size: clamp(2.2rem, min(5.5vw, 5.5vh), 5.5rem);
   font-weight: 300;
   letter-spacing: -0.01em;
   line-height: 1.0;
@@ -232,11 +232,20 @@ body.menu-open .cursor-ring { border-color: rgba(240,237,232,0.3); }
 
 /* Nav overlay footer info */
 .nav-footer {
-  position: absolute;
-  bottom: 40px; left: 10vw; right: 10vw;
+  position: fixed;
+  bottom: 32px; left: 10vw; right: 10vw;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
+  z-index: 401;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s cubic-bezier(0.23, 1, 0.32, 1), visibility 0.5s;
+}
+
+.nav-overlay.is-open .nav-footer {
+  opacity: 1;
+  visibility: visible;
 }
 
 .nav-footer-info span {
@@ -275,6 +284,7 @@ body.menu-open .cursor-ring { border-color: rgba(240,237,232,0.3); }
   display: flex;
   align-items: flex-end;
   justify-content: flex-start;
+  background: #080808;
 }
 
 .hero-video-wrap {
@@ -311,7 +321,29 @@ body.menu-open .cursor-ring { border-color: rgba(240,237,232,0.3); }
   position: relative;
   z-index: 2;
   padding: 0 48px 80px;
-  width: 100%;
+  width: 50%;
+}
+
+.hero-image {
+  position: absolute;
+  right: 0; top: 0; bottom: 0;
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  padding: 0 64px;
+}
+
+.hero-image img {
+  max-height: 55vh;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  opacity: 0;
+  animation: fadeUp 1.2s 0.6s cubic-bezier(0.23,1,0.32,1) forwards;
 }
 
 .hero-eyebrow {
@@ -1083,8 +1115,9 @@ body.menu-open .cursor-ring { border-color: rgba(240,237,232,0.3); }
 @media (max-width: 1024px) {
   .site-header { padding: 28px 32px; }
   .site-header.scrolled { padding: 20px 32px; }
-  .hero-content { padding: 0 32px 64px; }
-  .hero-scroll { right: 32px; bottom: 32px; }
+  .hero-content { padding: 0 32px 64px; width: 55%; }
+  .hero-image { padding: 0 32px; }
+  .hero-image img { max-height: 50vh; }
   .page-hero { padding: 90px 32px 16px; }
   .film-grid { padding: 48px 32px; gap: 24px; }
   .about-left { padding: 160px 40px 80px 32px; }
@@ -1094,8 +1127,8 @@ body.menu-open .cursor-ring { border-color: rgba(240,237,232,0.3); }
   .project-header { padding: 40px 32px 48px; }
   .project-video { padding: 0 32px 64px; }
   .project-gallery { padding: 0 32px 80px; }
-  .nav-footer { left: 32px; right: 32px; }
-  .nav-overlay { padding: 120px 6vw 160px; }
+  .nav-footer { left: 6vw; right: 6vw; }
+  .nav-overlay { padding: 90px 6vw 70px; }
 }
 
 /* ============================================================
@@ -1108,8 +1141,8 @@ body.menu-open .cursor-ring { border-color: rgba(240,237,232,0.3); }
   .site-header { padding: 24px 20px; }
   .site-header.scrolled { padding: 18px 20px; }
 
-  .hero-content { padding: 0 20px 56px; }
-  .hero-scroll { display: none; }
+  .hero-content { padding: 0 20px 56px; width: 100%; }
+  .hero-image { display: none; }
 
   .nav-blocks {
     grid-template-columns: 1fr;
@@ -1150,8 +1183,8 @@ body.menu-open .cursor-ring { border-color: rgba(240,237,232,0.3); }
   .illustration-grid { padding: 24px 20px 80px; gap: 28px 14px; }
   .illustration-item img { height: 110px; }
 
-  .nav-overlay { padding: 90px 20px 40px; }
-  .nav-overlay nav ul li a { font-size: clamp(2.5rem, 10vw, 4rem); padding: 14px 0; }
+  .nav-overlay { padding: 80px 20px 60px; }
+  .nav-overlay nav ul li a { font-size: clamp(2rem, min(8vw, 5vh), 3.5rem); padding: clamp(6px, 1vh, 14px) 0; }
   .nav-footer { display: none; }
 
   .site-footer { padding: 24px 20px; flex-direction: column; gap: 12px; text-align: center; }
