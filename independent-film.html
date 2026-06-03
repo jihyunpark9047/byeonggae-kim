@@ -3,25 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Kyeongbae Kim — Independent Film. Animated shorts exploring anxiety, desire, and emotional tension.">
+  <meta name="description" content="Kyeongbae Kim — Independent Film. Personal animated works.">
   <title>Independent Film — Kyeongbae Kim</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- Custom Cursor -->
   <div class="cursor"></div>
   <div class="cursor-ring"></div>
 
-  <!-- Nav Overlay -->
   <div class="nav-overlay" role="dialog" aria-label="Navigation menu">
     <nav>
       <ul>
-        <li><a href="index.html"><span class="nav-number">01</span>Home</a></li>
-        <li><a href="independent-film.html"><span class="nav-number">02</span>Independent Film</a></li>
-        <li><a href="commercial-film.html"><span class="nav-number">03</span>Commercial Film</a></li>
-        <li><a href="illustration.html"><span class="nav-number">04</span>Illustration</a></li>
-        <li><a href="about.html"><span class="nav-number">05</span>About</a></li>
+        <li><a href="independent-film.html"><span class="nav-number">01</span>Independent Film</a></li>
+        <li><a href="commercial-film.html"><span class="nav-number">02</span>Commercial Film</a></li>
+        <li><a href="animating.html"><span class="nav-number">03</span>Animating</a></li>
+        <li><a href="short-clip.html"><span class="nav-number">04</span>Short Clip</a></li>
+        <li><a href="illustration.html"><span class="nav-number">05</span>Illustration</a></li>
+        <li><a href="about.html"><span class="nav-number">06</span>About</a></li>
       </ul>
     </nav>
     <div class="nav-footer">
@@ -36,7 +35,6 @@
     </div>
   </div>
 
-  <!-- Header -->
   <header class="site-header">
     <a href="index.html" class="site-logo">KYEONGBAE KIM</a>
     <button class="nav-toggle" aria-label="Open navigation menu" aria-expanded="false">
@@ -46,9 +44,8 @@
     </button>
   </header>
 
-  <!-- Page Hero -->
   <section class="page-hero">
-    <span class="page-hero-label reveal">02 — Independent Film</span>
+    <span class="page-hero-label reveal">01 — Independent Film</span>
     <h1 class="page-hero-title t-display reveal reveal-delay-1">Independent<br>Film</h1>
     <p class="page-hero-desc reveal reveal-delay-2">
       Personal animated works exploring the rawest corners of emotional life.
@@ -56,59 +53,14 @@
     </p>
   </section>
 
-  <!-- Film Grid -->
-  <section class="film-grid">
+  <section class="film-grid" data-section="independent-film"></section>
 
-    <a href="projects/project-template.html?id=independent-1" class="film-card reveal">
-      <div class="film-card-thumb">
-        <img
-          src="https://img.youtube.com/vi/0VweUigkTzY/maxresdefault.jpg"
-          alt="Fragments — animated short film"
-          loading="lazy"
-        >
-        <div class="film-card-play" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-        </div>
-      </div>
-      <div class="film-card-info">
-        <div class="film-card-meta">
-          <span class="film-card-category">Independent</span>
-          <span class="film-card-year">2024</span>
-        </div>
-        <h2 class="film-card-title">Fragments</h2>
-        <span class="film-card-link">View project</span>
-      </div>
-    </a>
-
-    <a href="projects/project-template.html?id=independent-2" class="film-card reveal reveal-delay-1">
-      <div class="film-card-thumb">
-        <img
-          src="https://img.youtube.com/vi/0VweUigkTzY/hqdefault.jpg"
-          alt="Threshold — animated short film"
-          loading="lazy"
-        >
-        <div class="film-card-play" aria-hidden="true">
-          <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
-        </div>
-      </div>
-      <div class="film-card-info">
-        <div class="film-card-meta">
-          <span class="film-card-category">Independent</span>
-          <span class="film-card-year">2023</span>
-        </div>
-        <h2 class="film-card-title">Threshold</h2>
-        <span class="film-card-link">View project</span>
-      </div>
-    </a>
-
-  </section>
-
-  <!-- Footer -->
   <footer class="site-footer">
     <span class="footer-copy">© 2024 Kyeongbae Kim. All rights reserved.</span>
     <a href="#" class="footer-back-top">Back to top ↑</a>
   </footer>
 
+  <script src="js/portfolio-data.js"></script>
   <script src="js/script.js"></script>
 </body>
 </html>

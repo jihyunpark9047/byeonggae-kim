@@ -1,0 +1,32 @@
+﻿[파일 제목]
+Title : 제목
+Year : 공개 년도
+Duration : 러닝타임
+Role : 역할 (Director, Animator, Character Design, Layout …)
+Description : 
+설명 문구
+Order : 사이트 노출 순서 (1순위가 최상단)
+
+
+
+
+[AMEN A MAN]
+Title : AMEN A MAN
+Year : 2024
+Duration : 7 min
+Role : Director / Animator / Visual Development
+Description : 
+Following the memories of an old man on trial for killing a bird, the film explores hypocrisy and collective violence within human society.
+Order : 1
+
+
+
+
+[SeoulSori]
+Title : SeoulSori
+Year : 2020
+Duration : 3 min 30 sec
+Role : Director / Animator
+Description : 
+A meditation on the liminal spaces between states — waking and sleeping, presence and absence. Figures drift through landscapes that breathe and shift. Nothing stays still. The work was screened at independent animation festivals in Seoul, Tokyo, and Berlin.
+Order : 2

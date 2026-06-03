@@ -5,69 +5,48 @@
 
 'use strict';
 
-/* ---- Project Data ---- */
-const PROJECTS = {
-  'independent-1': {
-    title: 'Fragments',
-    category: 'Independent Film',
-    year: '2024',
-    duration: '7 min',
-    role: 'Director / Animator',
-    description: 'An animated short exploring the fragmentation of memory and identity. Each frame dissolves into the next, mirroring the way consciousness unravels under sustained pressure. The film was developed over eighteen months as a purely personal inquiry into the texture of forgetting.',
-    videoId: '0VweUigkTzY',
-    back: '../independent-film.html',
-    galleryImages: [
-      'https://img.youtube.com/vi/0VweUigkTzY/maxresdefault.jpg',
-      'https://img.youtube.com/vi/0VweUigkTzY/hqdefault.jpg',
-      'https://img.youtube.com/vi/0VweUigkTzY/mqdefault.jpg',
-    ]
-  },
-  'independent-2': {
-    title: 'Threshold',
-    category: 'Independent Film',
-    year: '2023',
-    duration: '12 min',
-    role: 'Director / Animator',
-    description: 'A meditation on the liminal spaces between states — waking and sleeping, presence and absence. Figures drift through landscapes that breathe and shift. Nothing stays still. The work was screened at independent animation festivals in Seoul, Tokyo, and Berlin.',
-    videoId: '0VweUigkTzY',
-    back: '../independent-film.html',
-    galleryImages: [
-      'https://img.youtube.com/vi/0VweUigkTzY/maxresdefault.jpg',
-      'https://img.youtube.com/vi/0VweUigkTzY/hqdefault.jpg',
-      'https://img.youtube.com/vi/0VweUigkTzY/mqdefault.jpg',
-    ]
-  },
-  'commercial-1': {
-    title: 'Pulse',
-    category: 'Commercial Film',
-    year: '2024',
-    duration: '3 min',
-    role: 'Director / Lead Animator',
-    description: 'A kinetic brand film for a leading digital platform. Raw energy translated into animated sequences that pulse with the rhythm of the brand. The brief called for something that felt alive — nervous, urgent, and alive.',
-    videoId: 'Y4gwAX3yrpk',
-    back: '../commercial-film.html',
-    galleryImages: [
-      'https://img.youtube.com/vi/Y4gwAX3yrpk/maxresdefault.jpg',
-      'https://img.youtube.com/vi/Y4gwAX3yrpk/hqdefault.jpg',
-      'https://img.youtube.com/vi/Y4gwAX3yrpk/mqdefault.jpg',
-    ]
-  },
-  'commercial-2': {
-    title: 'Resonance',
-    category: 'Commercial Film',
-    year: '2023',
-    duration: '4 min',
-    role: 'Director / Animator',
-    description: 'Music video animation exploring resonance between the sonic and the visual. Colors and forms vibrate in precise response to each musical moment. Commissioned for a Korean pop artist\'s visual campaign.',
-    videoId: 'Y4gwAX3yrpk',
-    back: '../commercial-film.html',
-    galleryImages: [
-      'https://img.youtube.com/vi/Y4gwAX3yrpk/maxresdefault.jpg',
-      'https://img.youtube.com/vi/Y4gwAX3yrpk/hqdefault.jpg',
-      'https://img.youtube.com/vi/Y4gwAX3yrpk/mqdefault.jpg',
-    ]
+/* ---- Portfolio data (from js/portfolio-data.js / Drive sync) ---- */
+const PROJECTS = typeof PORTFOLIO !== 'undefined' ? PORTFOLIO.projects : {};
+
+const NAV_SECTIONS = [
+  { href: 'independent-film.html', number: '01', label: 'Independent Film' },
+  { href: 'commercial-film.html', number: '02', label: 'Commercial Film' },
+  { href: 'animating.html', number: '03', label: 'Animating' },
+  { href: 'short-clip.html', number: '04', label: 'Short Clip' },
+  { href: 'illustration.html', number: '05', label: 'Illustration' },
+  { href: 'about.html', number: '06', label: 'About' },
+];
+
+const HOME_BLOCKS = [
+  { href: 'independent-film.html', number: '01', title: 'Independent<br>Film', section: 'independent-film' },
+  { href: 'commercial-film.html', number: '02', title: 'Commercial<br>Film', section: 'commercial-film' },
+  { href: 'animating.html', number: '03', title: 'Animating', section: 'animating' },
+  { href: 'short-clip.html', number: '04', title: 'Short Clip', section: 'short-clip' },
+  { href: 'illustration.html', number: '05', title: 'Illustration', section: 'illustration' },
+  { href: 'about.html', number: '06', title: 'About', section: 'about' },
+];
+
+function getSectionThumb(sectionKey) {
+  if (typeof PORTFOLIO === 'undefined') return null;
+  const section = PORTFOLIO.sections[sectionKey];
+  if (!section) return null;
+  if (section.projects && section.projects.length) {
+    const p = PROJECTS[section.projects[0]];
+    return p && p.thumbnail;
   }
-};
+  if (section.items && section.items.length) {
+    return section.items[0].url;
+  }
+  return null;
+}
+
+function getHeroVideoEmbed() {
+  const ids = PORTFOLIO?.sections?.['independent-film']?.projects || [];
+  if (ids.length && PROJECTS[ids[0]]?.videoEmbed) {
+    return PROJECTS[ids[0]].videoEmbed;
+  }
+  return null;
+}
 
 /* ============================================================
    INIT
@@ -80,8 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
   initPageTransitions();
   initLightbox();
   initBackToTop();
+  initHomePage();
+  initFilmGrid();
+  initGalleryGrid();
 
-  // Project template page
   if (document.getElementById('project-content')) {
     initProjectTemplate();
   }
@@ -277,12 +258,139 @@ function initBackToTop() {
 }
 
 /* ============================================================
+   HOME PAGE
+   ============================================================ */
+function initHomePage() {
+  const blocks = document.querySelector('.nav-blocks[data-home-blocks]');
+  if (!blocks || typeof PORTFOLIO === 'undefined') return;
+
+  blocks.innerHTML = HOME_BLOCKS.map((block, i) => {
+    const thumb = getSectionThumb(block.section);
+    const bgStyle = thumb
+      ? `style="background-image:url('${thumb}')"`
+      : '';
+    const arrow = block.section === 'about' ? 'Learn more →' : 'View work →';
+    return `
+      <a href="${block.href}" class="nav-block" aria-label="${block.title.replace(/<br>/g, ' ')}">
+        <div class="nav-block-bg" ${bgStyle}></div>
+        <div class="nav-block-overlay"></div>
+        <div class="nav-block-content">
+          <span class="nav-block-number">${block.number}</span>
+          <h2 class="nav-block-title">${block.title}</h2>
+          <span class="nav-block-arrow">${arrow}</span>
+        </div>
+      </a>`;
+  }).join('');
+
+  const heroFrame = document.querySelector('.hero-video-frame');
+  const embed = getHeroVideoEmbed();
+  if (heroFrame && embed) {
+    heroFrame.src = embed;
+  }
+
+  bindHoverables();
+  initScrollReveal();
+}
+
+/* ============================================================
+   FILM GRID (Independent / Commercial listing)
+   ============================================================ */
+function initFilmGrid() {
+  const grid = document.querySelector('.film-grid[data-section]');
+  if (!grid || typeof PORTFOLIO === 'undefined') return;
+
+  const sectionKey = grid.dataset.section;
+  const ids = PORTFOLIO.sections[sectionKey]?.projects || [];
+  const categoryLabel = sectionKey === 'commercial-film' ? 'Commercial' : 'Independent';
+
+  grid.innerHTML = ids.map((id, i) => {
+    const p = PROJECTS[id];
+    if (!p) return '';
+    const thumb = p.thumbnail || '';
+    const delay = i > 0 ? ` reveal-delay-${Math.min(i, 3)}` : '';
+    const metaExtra = p.client
+      ? `<span class="film-card-client">${p.client}</span>`
+      : '';
+    return `
+      <a href="projects/project-template.html?id=${id}" class="film-card reveal${delay}">
+        <div class="film-card-thumb">
+          <img src="${thumb}" alt="${p.title}" loading="lazy">
+          <div class="film-card-play" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+        </div>
+        <div class="film-card-info">
+          <div class="film-card-meta">
+            <span class="film-card-category">${categoryLabel}</span>
+            ${metaExtra}
+            <span class="film-card-year">${p.year || ''}</span>
+          </div>
+          <h2 class="film-card-title">${p.title}</h2>
+          <span class="film-card-link">View project</span>
+        </div>
+      </a>`;
+  }).join('');
+
+  bindHoverables();
+  initScrollReveal();
+}
+
+/* ============================================================
+   GALLERY GRID (Animating / Short Clip / Illustration)
+   ============================================================ */
+function initGalleryGrid() {
+  const grid = document.querySelector('.illustration-grid[data-section]');
+  if (!grid || typeof PORTFOLIO === 'undefined') return;
+
+  const sectionKey = grid.dataset.section;
+  const items = PORTFOLIO.sections[sectionKey]?.items || [];
+
+  grid.innerHTML = items.map((item, i) => {
+    const delay = i > 0 ? ` reveal-delay-${Math.min(i % 3, 3)}` : '';
+    const src = item.fullUrl || item.url;
+    return `
+      <div class="illustration-item reveal${delay}" data-lightbox="${src}">
+        <img src="${item.url}" alt="${item.name}" loading="lazy">
+        <div class="illustration-overlay">
+          <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+        </div>
+      </div>`;
+  }).join('');
+
+  bindLightboxItems();
+  bindHoverables();
+  initScrollReveal();
+}
+
+function bindHoverables() {
+  const hoverables = 'a, button, [data-hover], .nav-block, .film-card, .gallery-item, .illustration-item';
+  document.querySelectorAll(hoverables).forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('is-hovering'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('is-hovering'));
+  });
+}
+
+function bindLightboxItems() {
+  document.querySelectorAll('[data-lightbox]').forEach(item => {
+    if (item.dataset.lightboxBound) return;
+    item.dataset.lightboxBound = '1';
+    item.addEventListener('click', () => {
+      const lightbox = document.querySelector('.lightbox');
+      const lightboxImg = lightbox.querySelector('.lightbox-img');
+      lightboxImg.src = item.dataset.lightbox;
+      lightbox.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+}
+
+/* ============================================================
    PROJECT TEMPLATE — populate from URL param
    ============================================================ */
 function initProjectTemplate() {
-  const params  = new URLSearchParams(window.location.search);
-  const id      = params.get('id');
-  const data    = PROJECTS[id];
+  const params = new URLSearchParams(window.location.search);
+  const id = params.get('id');
+  const data = PROJECTS[id];
 
   if (!data) {
     document.getElementById('project-content').innerHTML =
@@ -290,60 +398,63 @@ function initProjectTemplate() {
     return;
   }
 
-  // Back link
   const backLink = document.querySelector('.project-back');
   if (backLink) backLink.href = data.back;
 
-  // Label
   const label = document.querySelector('.project-label');
   if (label) label.textContent = data.category;
 
-  // Title
   const title = document.querySelector('.project-title');
   if (title) title.textContent = data.title;
 
-  // Description
   const desc = document.querySelector('.project-desc');
-  if (desc) desc.textContent = data.description;
+  if (desc) desc.textContent = data.description || '';
 
-  // Meta
-  const metaYear     = document.querySelector('[data-meta="year"]');
-  const metaDuration = document.querySelector('[data-meta="duration"]');
-  const metaRole     = document.querySelector('[data-meta="role"]');
-  if (metaYear)     metaYear.textContent     = data.year;
-  if (metaDuration) metaDuration.textContent = data.duration;
-  if (metaRole)     metaRole.textContent     = data.role;
+  const setMeta = (key, value) => {
+    const el = document.querySelector(`[data-meta="${key}"]`);
+    const wrap = document.querySelector(`[data-meta-wrap="${key}"]`) ||
+      (el && el.closest('.project-meta-item'));
+    if (!el) return;
+    if (value) {
+      el.textContent = value;
+      if (wrap) wrap.style.display = '';
+    } else if (wrap) {
+      wrap.style.display = 'none';
+    }
+  };
 
-  // Video
+  setMeta('year', data.year);
+  setMeta('duration', data.duration);
+  setMeta('role', data.role);
+  setMeta('client', data.client);
+
   const videoFrame = document.querySelector('.project-video-frame');
-  if (videoFrame) {
-    videoFrame.src = `https://www.youtube.com/embed/${data.videoId}?rel=0&modestbranding=1&color=white`;
+  const videoWrap = document.querySelector('.project-video');
+  if (videoFrame && data.videoEmbed) {
+    videoFrame.src = data.videoEmbed;
+  } else if (videoWrap) {
+    videoWrap.style.display = 'none';
   }
 
-  // Gallery
+  const gallerySection = document.querySelector('.project-gallery');
   const galleryGrid = document.querySelector('.project-gallery-grid');
-  if (galleryGrid && data.galleryImages) {
-    galleryGrid.innerHTML = data.galleryImages.map(src => `
+  const gallery = data.gallery || [];
+
+  if (galleryGrid && gallery.length) {
+    galleryGrid.innerHTML = gallery.map((g) => {
+      const src = g.fullUrl || g.url;
+      return `
       <div class="gallery-item" data-lightbox="${src}">
-        <img src="${src}" alt="Gallery image" loading="lazy">
+        <img src="${g.url}" alt="${g.name || 'Gallery'}" loading="lazy">
         <div class="gallery-item-overlay">
           <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
         </div>
-      </div>
-    `).join('');
-
-    // Re-init lightbox bindings for dynamically added items
-    document.querySelectorAll('[data-lightbox]').forEach(item => {
-      item.addEventListener('click', () => {
-        const lightbox    = document.querySelector('.lightbox');
-        const lightboxImg = lightbox.querySelector('.lightbox-img');
-        lightboxImg.src   = item.dataset.lightbox;
-        lightbox.classList.add('is-open');
-        document.body.style.overflow = 'hidden';
-      });
-    });
+      </div>`;
+    }).join('');
+    bindLightboxItems();
+  } else if (gallerySection) {
+    gallerySection.style.display = 'none';
   }
 
-  // Page title
   document.title = `${data.title} — Kyeongbae Kim`;
 }

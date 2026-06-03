@@ -1,0 +1,38 @@
+{
+  "independent-film": {
+    "folderId": "1dD1dOhOHrWPjZJ2be5gHCY1h_1VS8Em7",
+    "textDocId": "1jPW6863cakhcHhBpevhrCzKdVv_xzTSz5Mx1EmGwXrU",
+    "items": {},
+    "projects": {
+      "AMEN A MAN": {
+        "folderId": "1xQii4zUhA0Soc_2-zVmYlyracHZS8twv",
+        "items": {}
+      },
+      "SeoulSori": {
+        "folderId": "1JgWdn7NyjXL-nbmwkmp-vbJHwMOXiO4v",
+        "items": {},
+        "gif": "1kodi1RmsfnbXx3mBlw2BMq763X2nQSjl"
+      }
+    }
+  },
+  "commercial-film": {
+    "folderId": "1rCuA9cQo-4EiMyRfZts69bI1Uqnlczh9",
+    "textDocId": "1j-pFEpG0ctu4RlCzLe3drej8Bq8Qxtr2L-gU9qxnero",
+    "items": {}
+  },
+  "animating": {
+    "folderId": "1eqEXAWAVCIRvrMU-LGnLl5zH6LkIcSS3",
+    "textDocId": null,
+    "items": {}
+  },
+  "short-clip": {
+    "folderId": "1RUeS8cM53BLszdoQpsj_CNmcDoARS15P",
+    "textDocId": null,
+    "items": {}
+  },
+  "illustration": {
+    "folderId": "13FTwbw4d3h6zNjJWcmtCdPhD5pVmGiQD",
+    "textDocId": null,
+    "items": {}
+  }
+}

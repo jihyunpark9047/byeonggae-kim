@@ -1,0 +1,45 @@
+﻿[파일 제목]
+Client : 클라이언트
+Title : 제목
+Year : 공개 년도
+Duration : 러닝타임
+Role : 역할 (Director, Animator, Character Design, Layout …)
+Order : 사이트 노출 순서 (1순위가 최상단)
+
+
+
+
+[Hanhwa]
+Client : Hanhwa
+Title : Youtube Hanwha TV – Knowk Knowk series
+Year : 2024
+Duration : 2 min 15 sec
+Role : Director / Animator / Visual Development
+Order : 6
+
+
+[aespa01]
+Client : SM Entertainment
+Title : Aespa Brand Film (Ep.02 Next Level)
+Year : 2022
+Duration : 2 min 15 sec
+Role : Director / Animator / Visual Development
+Order : 1
+
+
+[aespa02]
+Client : SM Entertainment
+Title : Aespa Brand Film (Ep.02 Next Level)
+Year : 2022
+Duration : 2 min 15 sec
+Role : Director / Animator / Visual Development
+Order : 2
+
+
+[lifeline]
+Client : TVING
+Title : Lifeline – Documentary Animation
+Year : 2024
+Duration : 2 min 15 sec
+Role : Director / Animator / Visual Development
+Order : 2

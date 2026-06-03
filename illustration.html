@@ -3,51 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Kyeongbae Kim — Illustration. A collection of drawings and visual studies.">
+  <meta name="description" content="Kyeongbae Kim — Illustration. Drawings and visual studies.">
   <title>Illustration — Kyeongbae Kim</title>
   <link rel="stylesheet" href="css/style.css">
-  <style>
-    /* Varied heights give masonry feel when using CSS columns */
-    .illustration-item:nth-child(2) { margin-top: 32px; }
-    .illustration-item:nth-child(5) { margin-top: -24px; }
-    .illustration-item:nth-child(7) { margin-top: 20px; }
-    .illustration-item:nth-child(9) { margin-top: -16px; }
-
-    /* Make duplicates look distinct via object-position */
-    .illustration-item:nth-child(even) img  { object-position: center 30%; }
-    .illustration-item:nth-child(3n)  img   { object-position: center 70%; }
-    .illustration-item:nth-child(4) img     { filter: brightness(0.85) contrast(1.1) !important; }
-    .illustration-item:nth-child(6) img     { filter: brightness(0.75) contrast(1.2) grayscale(30%) !important; }
-
-    /* Fake varied heights */
-    .illustration-item:nth-child(1)  { --h: 380px; }
-    .illustration-item:nth-child(2)  { --h: 280px; }
-    .illustration-item:nth-child(3)  { --h: 460px; }
-    .illustration-item:nth-child(4)  { --h: 300px; }
-    .illustration-item:nth-child(5)  { --h: 400px; }
-    .illustration-item:nth-child(6)  { --h: 260px; }
-    .illustration-item:nth-child(7)  { --h: 340px; }
-    .illustration-item:nth-child(8)  { --h: 480px; }
-    .illustration-item:nth-child(9)  { --h: 290px; }
-
-    .illustration-item img {
-      height: var(--h, 360px);
-      width: 100%;
-      object-fit: cover;
-    }
-
-    @media (max-width: 768px) {
-      .illustration-item img { height: 240px !important; }
-    }
-  </style>
 </head>
 <body>
 
-  <!-- Custom Cursor -->
   <div class="cursor"></div>
   <div class="cursor-ring"></div>
 
-  <!-- Lightbox -->
   <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
     <div class="lightbox-inner">
       <button class="lightbox-close" aria-label="Close lightbox">
@@ -58,15 +22,15 @@
     </div>
   </div>
 
-  <!-- Nav Overlay -->
   <div class="nav-overlay" role="dialog" aria-label="Navigation menu">
     <nav>
       <ul>
-        <li><a href="index.html"><span class="nav-number">01</span>Home</a></li>
-        <li><a href="independent-film.html"><span class="nav-number">02</span>Independent Film</a></li>
-        <li><a href="commercial-film.html"><span class="nav-number">03</span>Commercial Film</a></li>
-        <li><a href="illustration.html"><span class="nav-number">04</span>Illustration</a></li>
-        <li><a href="about.html"><span class="nav-number">05</span>About</a></li>
+        <li><a href="independent-film.html"><span class="nav-number">01</span>Independent Film</a></li>
+        <li><a href="commercial-film.html"><span class="nav-number">02</span>Commercial Film</a></li>
+        <li><a href="animating.html"><span class="nav-number">03</span>Animating</a></li>
+        <li><a href="short-clip.html"><span class="nav-number">04</span>Short Clip</a></li>
+        <li><a href="illustration.html"><span class="nav-number">05</span>Illustration</a></li>
+        <li><a href="about.html"><span class="nav-number">06</span>About</a></li>
       </ul>
     </nav>
     <div class="nav-footer">
@@ -81,7 +45,6 @@
     </div>
   </div>
 
-  <!-- Header -->
   <header class="site-header">
     <a href="index.html" class="site-logo">KYEONGBAE KIM</a>
     <button class="nav-toggle" aria-label="Open navigation menu" aria-expanded="false">
@@ -91,9 +54,8 @@
     </button>
   </header>
 
-  <!-- Page Hero -->
   <section class="page-hero">
-    <span class="page-hero-label reveal">04 — Illustration</span>
+    <span class="page-hero-label reveal">05 — Illustration</span>
     <h1 class="page-hero-title t-display reveal reveal-delay-1">Illustration</h1>
     <p class="page-hero-desc reveal reveal-delay-2">
       Drawings, studies, and images that exist between animation and the still frame.
@@ -101,99 +63,14 @@
     </p>
   </section>
 
-  <!-- Masonry Gallery -->
-  <section class="illustration-grid" aria-label="Illustration gallery">
+  <section class="illustration-grid" data-section="illustration" aria-label="Illustration gallery"></section>
 
-    <!-- Using the provided Drive image + variants for a rich masonry feel -->
-    <div class="illustration-item reveal"
-         data-lightbox="https://drive.google.com/thumbnail?id=1nkLb_PYA7ZJnD--IZlWfmgZoF9l89Elu&sz=w1200">
-      <img src="https://drive.google.com/thumbnail?id=1nkLb_PYA7ZJnD--IZlWfmgZoF9l89Elu&sz=w1200"
-           alt="Illustration 01" loading="lazy">
-      <div class="illustration-overlay">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-      </div>
-    </div>
-
-    <div class="illustration-item reveal reveal-delay-1"
-         data-lightbox="https://drive.google.com/thumbnail?id=1nkLb_PYA7ZJnD--IZlWfmgZoF9l89Elu&sz=w1200">
-      <img src="https://drive.google.com/thumbnail?id=1nkLb_PYA7ZJnD--IZlWfmgZoF9l89Elu&sz=w1200"
-           alt="Illustration 02" loading="lazy">
-      <div class="illustration-overlay">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-      </div>
-    </div>
-
-    <div class="illustration-item reveal reveal-delay-2"
-         data-lightbox="https://drive.google.com/thumbnail?id=1nkLb_PYA7ZJnD--IZlWfmgZoF9l89Elu&sz=w1200">
-      <img src="https://drive.google.com/thumbnail?id=1nkLb_PYA7ZJnD--IZlWfmgZoF9l89Elu&sz=w1200"
-           alt="Illustration 03" loading="lazy">
-      <div class="illustration-overlay">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-      </div>
-    </div>
-
-    <div class="illustration-item reveal"
-         data-lightbox="https://drive.google.com/thumbnail?id=1nkLb_PYA7ZJnD--IZlWfmgZoF9l89Elu&sz=w1200">
-      <img src="https://drive.google.com/thumbnail?id=1nkLb_PYA7ZJnD--IZlWfmgZoF9l89Elu&sz=w1200"
-           alt="Illustration 04" loading="lazy">
-      <div class="illustration-overlay">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-      </div>
-    </div>
-
-    <div class="illustration-item reveal reveal-delay-1"
-         data-lightbox="https://drive.google.com/thumbnail?id=1nkLb_PYA7ZJnD--IZlWfmgZoF9l89Elu&sz=w1200">
-      <img src="https://drive.google.com/thumbnail?id=1nkLb_PYA7ZJnD--IZlWfmgZoF9l89Elu&sz=w1200"
-           alt="Illustration 05" loading="lazy">
-      <div class="illustration-overlay">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-      </div>
-    </div>
-
-    <div class="illustration-item reveal reveal-delay-2"
-         data-lightbox="https://drive.google.com/thumbnail?id=1nkLb_PYA7ZJnD--IZlWfmgZoF9l89Elu&sz=w1200">
-      <img src="https://drive.google.com/thumbnail?id=1nkLb_PYA7ZJnD--IZlWfmgZoF9l89Elu&sz=w1200"
-           alt="Illustration 06" loading="lazy">
-      <div class="illustration-overlay">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-      </div>
-    </div>
-
-    <div class="illustration-item reveal"
-         data-lightbox="https://drive.google.com/thumbnail?id=1nkLb_PYA7ZJnD--IZlWfmgZoF9l89Elu&sz=w1200">
-      <img src="https://drive.google.com/thumbnail?id=1nkLb_PYA7ZJnD--IZlWfmgZoF9l89Elu&sz=w1200"
-           alt="Illustration 07" loading="lazy">
-      <div class="illustration-overlay">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-      </div>
-    </div>
-
-    <div class="illustration-item reveal reveal-delay-1"
-         data-lightbox="https://drive.google.com/thumbnail?id=1nkLb_PYA7ZJnD--IZlWfmgZoF9l89Elu&sz=w1200">
-      <img src="https://drive.google.com/thumbnail?id=1nkLb_PYA7ZJnD--IZlWfmgZoF9l89Elu&sz=w1200"
-           alt="Illustration 08" loading="lazy">
-      <div class="illustration-overlay">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-      </div>
-    </div>
-
-    <div class="illustration-item reveal reveal-delay-2"
-         data-lightbox="https://drive.google.com/thumbnail?id=1nkLb_PYA7ZJnD--IZlWfmgZoF9l89Elu&sz=w1200">
-      <img src="https://drive.google.com/thumbnail?id=1nkLb_PYA7ZJnD--IZlWfmgZoF9l89Elu&sz=w1200"
-           alt="Illustration 09" loading="lazy">
-      <div class="illustration-overlay">
-        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
-      </div>
-    </div>
-
-  </section>
-
-  <!-- Footer -->
   <footer class="site-footer">
     <span class="footer-copy">© 2024 Kyeongbae Kim. All rights reserved.</span>
     <a href="#" class="footer-back-top">Back to top ↑</a>
   </footer>
 
+  <script src="js/portfolio-data.js"></script>
   <script src="js/script.js"></script>
 </body>
 </html>
