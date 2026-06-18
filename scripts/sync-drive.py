@@ -214,62 +214,83 @@ def sync():
     # Independent Film
     key = "independent-film"
     fid = FOLDERS[key]
+    print(f"[{key}] fetching folder…")
     html = fetch(f"https://drive.google.com/drive/folders/{fid}")
     _, text = find_text_doc(html, fid)
-    sections = parse_text(text)
-    sections.sort(key=lambda s: int(s["fields"].get("Order", "999") or "999"))
-    projects = []
+    if not text:
+        print(f"  WARNING: text doc not found for {key}, skipping")
+    else:
+        sections = parse_text(text)
+        sections.sort(key=lambda s: int(s["fields"].get("Order", "999") or "999"))
+        projects = []
 
-    for sec in sections:
-        proj_name = sec["key"]
-        pfid = id_near(html, proj_name)
-        ph = fetch(f"https://drive.google.com/drive/folders/{pfid}")
-        video_id = file_id_by_aria(ph, proj_name, "video")
-        gallery = collect_gallery(ph)
-        f = sec["fields"]
-        pid = f"independent-{slugify(proj_name)}"
-        project = make_video_project(
-            pid, f, proj_name, SECTION_LABELS[key], "../independent-film.html", video_id
-        )
-        project["gallery"] = gallery
-        projects.append(project)
-        portfolio["projects"][pid] = project
+        for sec in sections:
+            proj_name = sec["key"]
+            pfid = id_near(html, proj_name)
+            if not pfid:
+                print(f"  WARNING: subfolder not found for '{proj_name}', skipping")
+                continue
+            ph = fetch(f"https://drive.google.com/drive/folders/{pfid}")
+            video_id = file_id_by_aria(ph, proj_name, "video")
+            if not video_id:
+                print(f"  WARNING: no video found for '{proj_name}'")
+            gallery = collect_gallery(ph)
+            f = sec["fields"]
+            pid = f"independent-{slugify(proj_name)}"
+            project = make_video_project(
+                pid, f, proj_name, SECTION_LABELS[key], "../independent-film.html", video_id
+            )
+            project["gallery"] = gallery
+            projects.append(project)
+            portfolio["projects"][pid] = project
+            print(f"  + {pid} ({len(gallery)} gallery items)")
 
-    portfolio["sections"][key] = {"projects": [p["id"] for p in projects]}
+        portfolio["sections"][key] = {"projects": [p["id"] for p in projects]}
 
     # Commercial Film
     key = "commercial-film"
     fid = FOLDERS[key]
+    print(f"[{key}] fetching folder…")
     html = fetch(f"https://drive.google.com/drive/folders/{fid}")
     _, text = find_text_doc(html, fid)
-    sections = parse_text(text)
-    media_map = build_media_map(html)
-    projects = []
-    seen = set()
+    if not text:
+        print(f"  WARNING: text doc not found for {key}, skipping")
+    else:
+        sections = parse_text(text)
+        media_map = build_media_map(html)
+        projects = []
+        seen = set()
 
-    for sec in sorted(sections, key=lambda s: int(s["fields"].get("Order", "999") or "999")):
-        file_key = sec["key"]
-        matched = resolve_media(file_key, media_map)
-        vid = matched["id"] if matched else None
-        pid = f"commercial-{slugify(file_key)}"
-        f = sec["fields"]
-        project = make_video_project(
-            pid, f, file_key, SECTION_LABELS[key], "../commercial-film.html", vid
-        )
-        projects.append(project)
-        portfolio["projects"][pid] = project
-        seen.add(normalize_key(file_key))
-        if matched:
-            seen.add(normalize_key(matched["aria_name"]))
+        for sec in sorted(sections, key=lambda s: int(s["fields"].get("Order", "999") or "999")):
+            file_key = sec["key"]
+            matched = resolve_media(file_key, media_map)
+            vid = matched["id"] if matched else None
+            if not vid:
+                print(f"  WARNING: no video matched for '{file_key}'")
+            pid = f"commercial-{slugify(file_key)}"
+            f = sec["fields"]
+            project = make_video_project(
+                pid, f, file_key, SECTION_LABELS[key], "../commercial-film.html", vid
+            )
+            projects.append(project)
+            portfolio["projects"][pid] = project
+            seen.add(normalize_key(file_key))
+            if matched:
+                seen.add(normalize_key(matched["aria_name"]))
+            print(f"  + {pid}")
 
-    projects.sort(key=lambda p: p["order"])
-    portfolio["sections"][key] = {"projects": [p["id"] for p in projects]}
+        projects.sort(key=lambda p: p["order"])
+        portfolio["sections"][key] = {"projects": [p["id"] for p in projects]}
 
     # Animating & Short Clip (video grids → project pages)
     for key in ["animating", "short-clip"]:
         fid = FOLDERS[key]
+        print(f"[{key}] fetching folder…")
         html = fetch(f"https://drive.google.com/drive/folders/{fid}")
         _, text = find_text_doc(html, fid)
+        if not text:
+            print(f"  WARNING: text doc not found for {key}, skipping")
+            continue
         sections = parse_text(text)
         media_map = build_media_map(html)
         projects = []
@@ -279,6 +300,8 @@ def sync():
             file_key = sec["key"]
             matched = resolve_media(file_key, media_map)
             vid = matched["id"] if matched else None
+            if not vid:
+                print(f"  WARNING: no video matched for '{file_key}'")
             pid = f"{key}-{slugify(file_key)}"
             f = sec["fields"]
             project = make_video_project(
@@ -286,32 +309,40 @@ def sync():
             )
             projects.append(project)
             portfolio["projects"][pid] = project
+            print(f"  + {pid}")
 
         portfolio["sections"][key] = {"projects": [p["id"] for p in projects]}
 
     # Illustration (image gallery)
     key = "illustration"
     fid = FOLDERS[key]
+    print(f"[{key}] fetching folder…")
     html = fetch(f"https://drive.google.com/drive/folders/{fid}")
     _, text = find_text_doc(html, fid)
-    sections = parse_text(text)
-    media_map = build_media_map(html)
-    items = []
+    if not text:
+        print(f"  WARNING: text doc not found for {key}, skipping")
+    else:
+        sections = parse_text(text)
+        media_map = build_media_map(html)
+        items = []
 
-    for sec in sorted(sections, key=lambda s: int(s["fields"].get("Order", "999") or "999")):
-        file_key = sec["key"]
-        matched = resolve_media(file_key, media_map)
-        file_id = matched["id"] if matched else None
-        items.append(
-            {
-                "name": file_key,
-                "order": int(sec["fields"].get("Order", "999") or "999"),
-                "fileId": file_id,
-                "url": drive_thumb(file_id) if file_id else None,
-                "fullUrl": drive_direct(file_id) if file_id else None,
-            }
-        )
-    portfolio["sections"][key] = {"items": items}
+        for sec in sorted(sections, key=lambda s: int(s["fields"].get("Order", "999") or "999")):
+            file_key = sec["key"]
+            matched = resolve_media(file_key, media_map)
+            file_id = matched["id"] if matched else None
+            if not file_id:
+                print(f"  WARNING: no image matched for '{file_key}'")
+            items.append(
+                {
+                    "name": file_key,
+                    "order": int(sec["fields"].get("Order", "999") or "999"),
+                    "fileId": file_id,
+                    "url": drive_thumb(file_id) if file_id else None,
+                    "fullUrl": drive_direct(file_id) if file_id else None,
+                }
+            )
+            print(f"  + {file_key}")
+        portfolio["sections"][key] = {"items": items}
 
     OUT_JSON.parent.mkdir(parents=True, exist_ok=True)
     with open(OUT_JSON, "w", encoding="utf-8") as f:
