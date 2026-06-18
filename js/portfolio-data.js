@@ -186,7 +186,7 @@ const PORTFOLIO = {
       "order": 1,
       "videoFileId": "1qvEvteW4AA4Y38lB8xMEnitRXbJ5rjWs",
       "videoEmbed": "https://drive.google.com/file/d/1qvEvteW4AA4Y38lB8xMEnitRXbJ5rjWs/preview",
-      "thumbnail": "https://drive.google.com/thumbnail?id=1qvEvteW4AA4Y38lB8xMEnitRXbJ5rjWs&sz=w1200",
+      "thumbnail": "https://drive.google.com/thumbnail?id=1P_sWXArHS23kL2Mr97hhLEdOXiGq0f6w&sz=w1200",
       "gallery": [],
       "back": "../commercial-film.html"
     },
@@ -202,7 +202,7 @@ const PORTFOLIO = {
       "order": 2,
       "videoFileId": "1jbGA5OcVrWtgH-TuNgLiy78_ZzHNSmc1",
       "videoEmbed": "https://drive.google.com/file/d/1jbGA5OcVrWtgH-TuNgLiy78_ZzHNSmc1/preview",
-      "thumbnail": "https://drive.google.com/thumbnail?id=1jbGA5OcVrWtgH-TuNgLiy78_ZzHNSmc1&sz=w1200",
+      "thumbnail": "https://drive.google.com/thumbnail?id=1UW2XziYafWf3b7RrvS8W5UkgUEY4fwKc&sz=w1200",
       "gallery": [],
       "back": "../commercial-film.html"
     },
@@ -218,7 +218,7 @@ const PORTFOLIO = {
       "order": 3,
       "videoFileId": "1VyXMawevVNG90hFUJ3wuXIv46Tlrv4F0",
       "videoEmbed": "https://drive.google.com/file/d/1VyXMawevVNG90hFUJ3wuXIv46Tlrv4F0/preview",
-      "thumbnail": "https://drive.google.com/thumbnail?id=1VyXMawevVNG90hFUJ3wuXIv46Tlrv4F0&sz=w1200",
+      "thumbnail": "https://drive.google.com/thumbnail?id=13O3xyI7uXa9rEmJJECgXjgBIz5sgo43S&sz=w1200",
       "gallery": [],
       "back": "../commercial-film.html"
     },
@@ -234,7 +234,7 @@ const PORTFOLIO = {
       "order": 4,
       "videoFileId": "1xq6Mz1CY2WsIS0vi6-uwXYPgJdIkWm6h",
       "videoEmbed": "https://drive.google.com/file/d/1xq6Mz1CY2WsIS0vi6-uwXYPgJdIkWm6h/preview",
-      "thumbnail": "https://drive.google.com/thumbnail?id=1xq6Mz1CY2WsIS0vi6-uwXYPgJdIkWm6h&sz=w1200",
+      "thumbnail": "https://drive.google.com/thumbnail?id=1TgtU1ROQ97W4XkUy1Syb5_o5DtMvF4Rl&sz=w1200",
       "gallery": [],
       "back": "../commercial-film.html"
     },
@@ -250,7 +250,7 @@ const PORTFOLIO = {
       "order": 5,
       "videoFileId": "10V1M7KJsjgwmtz0PIxeqxQ7Xcaxx-2pQ",
       "videoEmbed": "https://drive.google.com/file/d/10V1M7KJsjgwmtz0PIxeqxQ7Xcaxx-2pQ/preview",
-      "thumbnail": "https://drive.google.com/thumbnail?id=10V1M7KJsjgwmtz0PIxeqxQ7Xcaxx-2pQ&sz=w1200",
+      "thumbnail": "https://drive.google.com/thumbnail?id=1d80d4StdpWhmV_PT2XJgwdcU6OGP2kFa&sz=w1200",
       "gallery": [],
       "back": "../commercial-film.html"
     },
@@ -266,7 +266,7 @@ const PORTFOLIO = {
       "order": 6,
       "videoFileId": "1I7WlHnGwlVDmkH0UDEldFX8WindgmmYm",
       "videoEmbed": "https://drive.google.com/file/d/1I7WlHnGwlVDmkH0UDEldFX8WindgmmYm/preview",
-      "thumbnail": "https://drive.google.com/thumbnail?id=1I7WlHnGwlVDmkH0UDEldFX8WindgmmYm&sz=w1200",
+      "thumbnail": "https://drive.google.com/thumbnail?id=1gmsNmuJI5u-2cZwOO2ssUwm--JUq4Pfn&sz=w1200",
       "gallery": [],
       "back": "../commercial-film.html"
     },
@@ -282,7 +282,7 @@ const PORTFOLIO = {
       "order": 7,
       "videoFileId": "1B2J1wQQyiSh_mNBF22VU4rr3X_CkNseF",
       "videoEmbed": "https://drive.google.com/file/d/1B2J1wQQyiSh_mNBF22VU4rr3X_CkNseF/preview",
-      "thumbnail": "https://drive.google.com/thumbnail?id=1B2J1wQQyiSh_mNBF22VU4rr3X_CkNseF&sz=w1200",
+      "thumbnail": "https://drive.google.com/thumbnail?id=1FVY_z1KROTLWfckujp4y9rm7-bTN1Mo3&sz=w1200",
       "gallery": [],
       "back": "../commercial-film.html"
     },
@@ -298,7 +298,7 @@ const PORTFOLIO = {
       "order": 8,
       "videoFileId": "1-tkyDnKLB1ASZi2aWwKCD_iHMNFCXIDN",
       "videoEmbed": "https://drive.google.com/file/d/1-tkyDnKLB1ASZi2aWwKCD_iHMNFCXIDN/preview",
-      "thumbnail": "https://drive.google.com/thumbnail?id=1-tkyDnKLB1ASZi2aWwKCD_iHMNFCXIDN&sz=w1200",
+      "thumbnail": "https://drive.google.com/thumbnail?id=1YL73Xl9m625gee3-dLSOrpLOKGVNd7tF&sz=w1200",
       "gallery": [],
       "back": "../commercial-film.html"
     },

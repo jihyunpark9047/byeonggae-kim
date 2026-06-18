@@ -189,6 +189,32 @@ def collect_gallery(ph: str) -> list:
     return gallery
 
 
+def collect_thumbnails(section_html: str) -> dict:
+    """Return {normalized_key: file_id} for images in the 'thumbnail' subfolder."""
+    sfid = id_near_label(section_html, "thumbnail Shared folder")
+    if not sfid:
+        return {}
+    sh = fetch(f"https://drive.google.com/drive/folders/{sfid}")
+    thumbs = {}
+    for n, t in aria_file_names(sh):
+        if t == "image":
+            fid = file_id_by_aria(sh, n, "image")
+            if fid:
+                thumbs[normalize_key(n)] = fid
+    return thumbs
+
+
+def resolve_thumbnail(file_key: str, thumb_map: dict):
+    """Return file_id for the best-matching thumbnail, or None."""
+    nk = normalize_key(file_key)
+    if nk in thumb_map:
+        return thumb_map[nk]
+    for key, fid in thumb_map.items():
+        if nk in key or key in nk:
+            return fid
+    return None
+
+
 def make_video_project(pid, f, file_key, category, back, video_id, order=None):
     return {
         "id": pid,
@@ -258,6 +284,9 @@ def sync():
     else:
         sections = parse_text(text)
         media_map = build_media_map(html)
+        thumb_map = collect_thumbnails(html)
+        if thumb_map:
+            print(f"  Found {len(thumb_map)} custom thumbnails")
         projects = []
         seen = set()
 
@@ -272,12 +301,17 @@ def sync():
             project = make_video_project(
                 pid, f, file_key, SECTION_LABELS[key], "../commercial-film.html", vid
             )
+            # Override thumbnail with custom image from 'thumbnail' folder
+            thumb_id = resolve_thumbnail(file_key, thumb_map)
+            if thumb_id:
+                project["thumbnail"] = drive_thumb(thumb_id)
             projects.append(project)
             portfolio["projects"][pid] = project
             seen.add(normalize_key(file_key))
             if matched:
                 seen.add(normalize_key(matched["aria_name"]))
-            print(f"  + {pid}")
+            thumb_note = " [custom thumb]" if thumb_id else ""
+            print(f"  + {pid}{thumb_note}")
 
         projects.sort(key=lambda p: p["order"])
         portfolio["sections"][key] = {"projects": [p["id"] for p in projects]}
