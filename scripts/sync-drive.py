@@ -115,7 +115,7 @@ def resolve_media(file_key: str, media_map: dict):
 
 
 def drive_thumb(fid: str, size: str = "w1200") -> str:
-    return f"https://drive.google.com/thumbnail?id={fid}&sz={size}"
+    return f"https://lh3.googleusercontent.com/d/{fid}={size}"
 
 
 def drive_video_embed(fid: str) -> str:
