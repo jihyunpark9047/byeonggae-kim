@@ -20,6 +20,13 @@ FOLDERS = {
     "illustration": "13FTwbw4d3h6zNjJWcmtCdPhD5pVmGiQD",
 }
 
+SECTION_LABELS = {
+    "independent-film": "Independent Film",
+    "commercial-film": "Commercial Film",
+    "animating": "Animating",
+    "short-clip": "Short Clip",
+}
+
 
 def fetch(url: str) -> str:
     req = urllib.request.Request(url, headers=UA)
@@ -79,6 +86,34 @@ def aria_file_names(html: str):
     return names
 
 
+def normalize_key(name: str) -> str:
+    base = name.lower().strip()
+    base = re.sub(r"\.(mp4|avi|mov|mkv|webm|m4v|jpg|jpeg|png|gif|webp)$", "", base, flags=re.I)
+    return base
+
+
+def build_media_map(html: str):
+    media = {}
+    for n, t in aria_file_names(html):
+        if t not in ("video", "image"):
+            continue
+        fid = file_id_by_aria(html, n, t)
+        if not fid:
+            continue
+        media[normalize_key(n)] = {"aria_name": n, "type": t, "id": fid}
+    return media
+
+
+def resolve_media(file_key: str, media_map: dict):
+    nk = normalize_key(file_key)
+    if nk in media_map:
+        return media_map[nk]
+    for key, val in media_map.items():
+        if nk == key or nk in key or key in nk:
+            return val
+    return None
+
+
 def drive_thumb(fid: str, size: str = "w1200") -> str:
     return f"https://drive.google.com/thumbnail?id={fid}&sz={size}"
 
@@ -136,6 +171,43 @@ def slugify(name: str) -> str:
     return re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-")
 
 
+def collect_gallery(ph: str) -> list:
+    gallery = []
+    for folder_label in ("gallery Shared folder", "image Shared folder", "GIF Shared folder"):
+        sfid = id_near_label(ph, folder_label)
+        if not sfid:
+            continue
+        sh = fetch(f"https://drive.google.com/drive/folders/{sfid}")
+        for n, t in aria_file_names(sh):
+            if t != "image":
+                continue
+            gid = file_id_by_aria(sh, n, "image")
+            if gid:
+                gallery.append(
+                    {"name": n, "url": drive_thumb(gid), "fullUrl": drive_direct(gid)}
+                )
+    return gallery
+
+
+def make_video_project(pid, f, file_key, category, back, video_id, order=None):
+    return {
+        "id": pid,
+        "title": f.get("Title", file_key),
+        "category": category,
+        "client": f.get("Client", ""),
+        "year": f.get("Year", ""),
+        "duration": f.get("Duration", ""),
+        "role": f.get("Role", ""),
+        "description": f.get("Description", ""),
+        "order": order if order is not None else int(f.get("Order", "999") or "999"),
+        "videoFileId": video_id,
+        "videoEmbed": drive_video_embed(video_id) if video_id else None,
+        "thumbnail": drive_thumb(video_id) if video_id else None,
+        "gallery": [],
+        "back": back,
+    }
+
+
 def sync():
     portfolio = {"sections": {}, "projects": {}}
 
@@ -153,46 +225,13 @@ def sync():
         pfid = id_near(html, proj_name)
         ph = fetch(f"https://drive.google.com/drive/folders/{pfid}")
         video_id = file_id_by_aria(ph, proj_name, "video")
-        gallery = []
-        sfid = id_near_label(ph, "image Shared folder")
-        if sfid:
-            sh = fetch(f"https://drive.google.com/drive/folders/{sfid}")
-            for n, t in aria_file_names(sh):
-                if t == "image":
-                    gid = file_id_by_aria(sh, n, "image")
-                    if gid:
-                        gallery.append(
-                            {"name": n, "url": drive_thumb(gid), "fullUrl": drive_direct(gid)}
-                        )
-        for sub in ["GIF"]:
-            sfid = id_near(ph, sub)
-            if sfid:
-                sh = fetch(f"https://drive.google.com/drive/folders/{sfid}")
-                for n, t in aria_file_names(sh):
-                    if t == "image":
-                        gid = file_id_by_aria(sh, n, "image")
-                        if gid:
-                            gallery.append(
-                                {"name": n, "url": drive_thumb(gid), "fullUrl": drive_direct(gid)}
-                            )
-
+        gallery = collect_gallery(ph)
         f = sec["fields"]
         pid = f"independent-{slugify(proj_name)}"
-        project = {
-            "id": pid,
-            "title": f.get("Title", proj_name),
-            "category": "Independent Film",
-            "year": f.get("Year", ""),
-            "duration": f.get("Duration", ""),
-            "role": f.get("Role", ""),
-            "description": f.get("Description", ""),
-            "order": int(f.get("Order", "999") or "999"),
-            "videoFileId": video_id,
-            "videoEmbed": drive_video_embed(video_id) if video_id else None,
-            "thumbnail": drive_thumb(video_id) if video_id else None,
-            "gallery": gallery,
-            "back": "../independent-film.html",
-        }
+        project = make_video_project(
+            pid, f, proj_name, SECTION_LABELS[key], "../independent-film.html", video_id
+        )
+        project["gallery"] = gallery
         projects.append(project)
         portfolio["projects"][pid] = project
 
@@ -204,87 +243,75 @@ def sync():
     html = fetch(f"https://drive.google.com/drive/folders/{fid}")
     _, text = find_text_doc(html, fid)
     sections = parse_text(text)
-    aria_imgs = {n.lower(): n for n, t in aria_file_names(html) if t == "video"}
+    media_map = build_media_map(html)
     projects = []
     seen = set()
 
     for sec in sorted(sections, key=lambda s: int(s["fields"].get("Order", "999") or "999")):
         file_key = sec["key"]
-        real = aria_imgs.get(file_key.lower(), file_key)
-        vid = file_id_by_aria(html, real, "video")
+        matched = resolve_media(file_key, media_map)
+        vid = matched["id"] if matched else None
         pid = f"commercial-{slugify(file_key)}"
         f = sec["fields"]
-        project = {
-            "id": pid,
-            "title": f.get("Title", file_key),
-            "category": "Commercial Film",
-            "client": f.get("Client", ""),
-            "year": f.get("Year", ""),
-            "duration": f.get("Duration", ""),
-            "role": f.get("Role", ""),
-            "description": f.get("Description", ""),
-            "order": int(f.get("Order", "999") or "999"),
-            "videoFileId": vid,
-            "videoEmbed": drive_video_embed(vid) if vid else None,
-            "thumbnail": drive_thumb(vid) if vid else None,
-            "gallery": [],
-            "back": "../commercial-film.html",
-        }
+        project = make_video_project(
+            pid, f, file_key, SECTION_LABELS[key], "../commercial-film.html", vid
+        )
         projects.append(project)
         portfolio["projects"][pid] = project
-        seen.add(file_key.lower())
-
-    order = 50
-    for n, t in aria_file_names(html):
-        if t != "video" or n.lower() in seen:
-            continue
-        vid = file_id_by_aria(html, n, "video")
-        pid = f"commercial-{slugify(n)}"
-        project = {
-            "id": pid,
-            "title": n,
-            "category": "Commercial Film",
-            "client": "",
-            "year": "",
-            "duration": "",
-            "role": "",
-            "description": "",
-            "order": order,
-            "videoFileId": vid,
-            "videoEmbed": drive_video_embed(vid) if vid else None,
-            "thumbnail": drive_thumb(vid) if vid else None,
-            "gallery": [],
-            "back": "../commercial-film.html",
-        }
-        order += 1
-        projects.append(project)
-        portfolio["projects"][pid] = project
+        seen.add(normalize_key(file_key))
+        if matched:
+            seen.add(normalize_key(matched["aria_name"]))
 
     projects.sort(key=lambda p: p["order"])
     portfolio["sections"][key] = {"projects": [p["id"] for p in projects]}
 
-    # Gallery sections
-    for key in ["animating", "short-clip", "illustration"]:
+    # Animating & Short Clip (video grids → project pages)
+    for key in ["animating", "short-clip"]:
         fid = FOLDERS[key]
         html = fetch(f"https://drive.google.com/drive/folders/{fid}")
         _, text = find_text_doc(html, fid)
         sections = parse_text(text)
-        aria_imgs = {n.lower(): n for n, t in aria_file_names(html) if t == "image"}
-        items = []
+        media_map = build_media_map(html)
+        projects = []
+        back = f"../{key}.html"
+
         for sec in sorted(sections, key=lambda s: int(s["fields"].get("Order", "999") or "999")):
             file_key = sec["key"]
-            real = aria_imgs.get(file_key.lower(), file_key)
-            file_id = file_id_by_aria(html, real, "image")
-            items.append(
-                {
-                    "name": file_key,
-                    "order": int(sec["fields"].get("Order", "999") or "999"),
-                    "fileId": file_id,
-                    "url": drive_thumb(file_id) if file_id else None,
-                    "fullUrl": drive_direct(file_id) if file_id else None,
-                }
+            matched = resolve_media(file_key, media_map)
+            vid = matched["id"] if matched else None
+            pid = f"{key}-{slugify(file_key)}"
+            f = sec["fields"]
+            project = make_video_project(
+                pid, f, file_key, SECTION_LABELS[key], back, vid
             )
-        portfolio["sections"][key] = {"items": items}
+            projects.append(project)
+            portfolio["projects"][pid] = project
+
+        portfolio["sections"][key] = {"projects": [p["id"] for p in projects]}
+
+    # Illustration (image gallery)
+    key = "illustration"
+    fid = FOLDERS[key]
+    html = fetch(f"https://drive.google.com/drive/folders/{fid}")
+    _, text = find_text_doc(html, fid)
+    sections = parse_text(text)
+    media_map = build_media_map(html)
+    items = []
+
+    for sec in sorted(sections, key=lambda s: int(s["fields"].get("Order", "999") or "999")):
+        file_key = sec["key"]
+        matched = resolve_media(file_key, media_map)
+        file_id = matched["id"] if matched else None
+        items.append(
+            {
+                "name": file_key,
+                "order": int(sec["fields"].get("Order", "999") or "999"),
+                "fileId": file_id,
+                "url": drive_thumb(file_id) if file_id else None,
+                "fullUrl": drive_direct(file_id) if file_id else None,
+            }
+        )
+    portfolio["sections"][key] = {"items": items}
 
     OUT_JSON.parent.mkdir(parents=True, exist_ok=True)
     with open(OUT_JSON, "w", encoding="utf-8") as f:

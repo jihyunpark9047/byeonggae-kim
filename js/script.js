@@ -304,7 +304,13 @@ function initFilmGrid() {
 
   const sectionKey = grid.dataset.section;
   const ids = PORTFOLIO.sections[sectionKey]?.projects || [];
-  const categoryLabel = sectionKey === 'commercial-film' ? 'Commercial' : 'Independent';
+  const categoryMap = {
+    'independent-film': 'Independent',
+    'commercial-film': 'Commercial',
+    'animating': 'Animating',
+    'short-clip': 'Short Clip',
+  };
+  const categoryLabel = categoryMap[sectionKey] || 'Work';
 
   grid.innerHTML = ids.map((id, i) => {
     const p = PROJECTS[id];
