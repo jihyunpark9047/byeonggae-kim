@@ -261,15 +261,23 @@ def sync():
             if not video_id:
                 print(f"  WARNING: no video found for '{proj_name}'")
             gallery = collect_gallery(ph)
+            # Use thumbnail from 'thumbnail' subfolder inside project folder
+            proj_thumb_map = collect_thumbnails(ph)
+            proj_thumb_id = resolve_thumbnail(proj_name, proj_thumb_map)
+            if not proj_thumb_id and proj_thumb_map:
+                proj_thumb_id = next(iter(proj_thumb_map.values()))
             f = sec["fields"]
             pid = f"independent-{slugify(proj_name)}"
             project = make_video_project(
                 pid, f, proj_name, SECTION_LABELS[key], "../independent-film.html", video_id
             )
+            if proj_thumb_id:
+                project["thumbnail"] = drive_thumb(proj_thumb_id)
             project["gallery"] = gallery
             projects.append(project)
             portfolio["projects"][pid] = project
-            print(f"  + {pid} ({len(gallery)} gallery items)")
+            thumb_note = " [custom thumb]" if proj_thumb_id else ""
+            print(f"  + {pid} ({len(gallery)} gallery items){thumb_note}")
 
         portfolio["sections"][key] = {"projects": [p["id"] for p in projects]}
 
