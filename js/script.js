@@ -440,7 +440,8 @@ function initProjectTemplate() {
       // Show thumbnail poster; load video on click
       poster.querySelector('.project-poster-img').src = data.thumbnail;
       poster.addEventListener('click', () => {
-        videoFrame.src = data.videoEmbed;
+        const sep = data.videoEmbed.includes('?') ? '&' : '?';
+        videoFrame.src = data.videoEmbed + sep + 'autoplay=1';
         poster.classList.add('hidden');
       });
     } else {
